@@ -13,7 +13,8 @@ export const reducer = (state, action) => {
       return {patient: newUpdatedPatient} ;
     }
     case 'REMOVE_PATIENT':{
-      return {patient: state.patient};
+      const remainPatient = state.patient.filter(pt => pt.id !== action.id);
+      return {patient: remainPatient};
     }
     default: {
       return state;

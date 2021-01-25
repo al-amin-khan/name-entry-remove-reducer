@@ -1,5 +1,6 @@
 import React, { useReducer, useRef } from 'react';
 import { initialState, reducer } from '../../Reducers/PatientReducer';
+import PatientList from '../PatientList/PatientList';
 
 const PatientManagement = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -14,7 +15,6 @@ const PatientManagement = () => {
     });
     nameRef.current.value = '';
 
-    console.log(state);
   }
   return (
     <div>
@@ -23,6 +23,17 @@ const PatientManagement = () => {
       <form onSubmit={handleSubmit}>
         <input type="text" ref={nameRef}/>
       </form>
+      <br/>
+      <h2>Patient List:</h2>
+      {
+        state.patient.map(pt => <ol 
+                                  key={pt.id} 
+                                  list={pt}
+                                  onClick ={() => dispatch({type: 'REMOVE_PATIENT', id: pt.id})}
+                                  >
+                                  <strong>{pt.id}</strong>: {pt.name}
+                                  </ol> )
+      }
     </div>
   );
 };
